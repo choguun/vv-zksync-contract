@@ -1,20 +1,21 @@
 # vv-zksync-contract
 
 ### Vision
-
 * On-chain AIGC Survival Sandbox voxel-theme games in which users truly own their assets.
 
 ### Description
-
 * We are building a decentralized and On-chain AIGC Survival Sandbox voxel-theme games in which users truly own their assets by leveraging blockchain, IPFS and AI technology.
 
-### How to deploy vv-zksync-contract
+### Problem
+-Users do not truly own in-game assets. \
+-Centralized and Control by Game Company \
+-Limit of game content \
+-The game is short-lived and does not sustain game economic
 
-* npm run deploy
-* npm run setup
+### Team Backgroud
+-We has experienced in Web3 > 4 years, previous successful NFT launch project that sold for more than 1.5 million USD
 
 ### Technologies Used:
-
 1. Smart Contract
 1.1 On-chain in-game Items and Token
 1.2 World (Game Logic)
@@ -24,7 +25,6 @@
 5. AI & LLM
 
 ### Key Features:
-
 1. On-chain Game Logic eg. Quest(Daily Check-in, Raffle, Mini game), Craft, Item, Token, Profile, and World.
 2. Multiplayer
 3. Supported Multi-Platform on browser
@@ -32,9 +32,13 @@
 ### How it works:
 ![How it works](/howitwork.png "How it works")
 
-Demo:
-https://zksync.voxelverses.xyz \
+### Demo:
+https://zksync.voxelverses.xyz
 
+
+### How to deploy vv-zksync-contract
+* npm run deploy
+* npm run setup
 
 ### Deployed Smart Contract
 1.Profile - NFT Profile to identify unique user https://sepolia.explorer.zksync.io/address/0x0C625C5AB6ec60802511DF11c90A47c5d35810D5 \
