@@ -9,7 +9,7 @@ contract Profile is ERC721, ERC721Enumerable, Ownable {
 
     mapping(uint256 => string) public profileHandle; // tokenId => handle
     mapping(string => uint256) public handleToTokenId; // handle => tokenId
-    uint256 public price = 0.001 ether; // 0.001 ETH
+    uint256 public price = 0.0001 ether; // 0.0001 ETH
 
     constructor(address _initialOwner) ERC721("Profile", "Profile") {
       transferOwnership(_initialOwner);
@@ -29,9 +29,9 @@ contract Profile is ERC721, ERC721Enumerable, Ownable {
         profileHandle[totalSupply()] = username;
     }
 
-    function withdraw() public onlyOwner {
-        payable(msg.sender).transfer(address(this).balance);
-    }
+    // function withdraw() public onlyOwner {
+    //     payable(msg.sender).transfer(address(this).balance);
+    // }
 
     function supportsInterface(bytes4 interfaceId) public view override(ERC721, ERC721Enumerable) returns (bool) {
       return super.supportsInterface(interfaceId);

@@ -9,11 +9,12 @@ import { ethers } from "ethers";
 // An example of a script to interact with the contract
 export default async function () {
   // console.log(`Running script to interact with contract ${CONTRACT_ADDRESS}`);
-  const world = "0xD6B783FD0D14ba220Bfb493b4f697De85Fec5001";
-  const item = "0xD3B67827f56cFae8c1B17fF23f2A886AbC1EE547";
-  const token = "0x753d29A2371a992736aAD46D647AAa1459630d16";
-  const profile = "0x0C625C5AB6ec60802511DF11c90A47c5d35810D5";
-  const craft = "0xd3aE73F38575B308394f1bB83DdEDe4c8aFFF7c3";
+  const world = "0x56F8776A2a0EA9AF417aaC11b71B5f44c0F76b97";
+  const item = "0xb7450FCa23f1e8EFe7d91a85Dc278ccf1d392918";
+  const token = "0xeDD2b6DDa58614B7B8cB9031BEe6eCd4B56edDDc";
+  const profile = "0x1844a44F0916219A03A69DA69611322F797BE723";
+  const craft = "0xBBaB1ca188B68f4B18b88eF15E16e6034b1cd5b5";
+  const vault = "0xBE8348Fbba416573D29658D72e372Ab2DD7e953f";
 
   // Load compiled contract info
   const WorldcontractArtifact = await hre.artifacts.readArtifact("World");
@@ -111,4 +112,8 @@ export default async function () {
   const tx16 = await Worldcontract.createItem(2, "GOLDEN PICKAXE", "GOLDEN PICKAXE", 600);
   console.log(`Tx16: ${tx16.hash}`);
   await tx16.wait();
+
+  const tx17 = await Worldcontract.setVault(vault);
+  console.log(`Tx17: ${tx17.hash}`);
+  await tx17.wait();
 }

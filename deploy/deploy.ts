@@ -7,15 +7,17 @@ export default async function () {
   // const contractArtifactName = "Greeter";
   // const constructorArguments = ["Hi there!"];
   // await deployContract(contractArtifactName, constructorArguments);
-  const owner = getWallet();
+  const ownerX = getWallet();
+  const owner = await ownerX.address;
 
   const profile = await deployContract("Profile", [owner]);
   const world = await deployContract("World", [owner]);
   const token = await deployContract("Token", [owner, await world.getAddress(), await profile.getAddress()]);
   const craft = await deployContract("CraftSystem", [owner, await world.getAddress()]);
   const item = await deployContract("Item", [owner, await world.getAddress(), await craft.getAddress(), ""]);
+  const vault = await deployContract("ERC4626Vault", [await token.getAddress()]);
 
-  // await token.setWorld([await world.getAddress()]);
+  await token.setWorld([await world.getAddress()]);
   
   console.log(
     `item address: ${await item.getAddress()}`
@@ -32,4 +34,7 @@ export default async function () {
   console.log(
     `craft address: ${await craft.getAddress()}`
   );
+  console.log(
+    `vault address: ${await vault.getAddress()}`
+  )
 }

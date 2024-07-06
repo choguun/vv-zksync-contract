@@ -34,6 +34,10 @@ contract Item is ERC1155, Ownable {
         _mint(_to, _id, _amount, "");
     }
 
+    function burn(address _to, uint256 _id, uint256 _amount) public onlyWorld {
+        _burn(_to, _id, _amount);
+    }
+
     function mintbyCraftSystem(address _to, uint256 _id, uint256 _amount) public onlyCraft {
         _mint(_to, _id, _amount, "");
     }

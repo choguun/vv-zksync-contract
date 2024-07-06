@@ -8,10 +8,10 @@ contract Raffle {
     event RaffleEntered(address indexed user, uint256 randomSeed, bytes32 indexed raffleId);
 
     function _enterRaffle() internal returns (uint256) {
-        require(
-            block.timestamp >= lastParticipationTime[msg.sender] + COOLDOWN_PERIOD,
-            "You must wait 24 hours to enter the raffle again."
-        );
+        // require(
+        //     block.timestamp >= lastParticipationTime[msg.sender] + COOLDOWN_PERIOD,
+        //     "You must wait 24 hours to enter the raffle again."
+        // );
         lastParticipationTime[msg.sender] = block.timestamp;
 
         // Generate a pseudo-random number between 0 and 9
