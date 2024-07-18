@@ -9,12 +9,12 @@ import { ethers } from "ethers";
 // An example of a script to interact with the contract
 export default async function () {
   // console.log(`Running script to interact with contract ${CONTRACT_ADDRESS}`);
-  const world = "0x56F8776A2a0EA9AF417aaC11b71B5f44c0F76b97";
-  const item = "0xb7450FCa23f1e8EFe7d91a85Dc278ccf1d392918";
-  const token = "0xeDD2b6DDa58614B7B8cB9031BEe6eCd4B56edDDc";
-  const profile = "0x1844a44F0916219A03A69DA69611322F797BE723";
-  const craft = "0xBBaB1ca188B68f4B18b88eF15E16e6034b1cd5b5";
-  const vault = "0xBE8348Fbba416573D29658D72e372Ab2DD7e953f";
+  const world = "0xE2F279dF93d6C9e991115c281F7733f0d67e3406";
+  const item = "0xecfA6096A6c35d19933Ea9D0126C81568e4B7f95";
+  const token = "0x3cA22Bd7d7699340fC12e4B56F6d1b182038bfE6";
+  const profile = "0x3c6843A3c8cAa69e843d82617de46A4883a0B4F7";
+  const craft = "0x6135BEAb54A539b73C552fcaBd97bb44dc5c56c0";
+  const vault = "0xC3c2C354C434303F617fAF4F070aBCD49e9265f8";
 
   // Load compiled contract info
   const WorldcontractArtifact = await hre.artifacts.readArtifact("World");

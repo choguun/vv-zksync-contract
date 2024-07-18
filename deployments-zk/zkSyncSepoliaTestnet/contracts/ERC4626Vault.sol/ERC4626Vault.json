@@ -443,6 +443,56 @@
       "factoryDeps": [],
       "address": "0xBE8348Fbba416573D29658D72e372Ab2DD7e953f",
       "txHash": "0xa2531a8f7904277fe42374e9792cd6de13a3e32215d2955455d9bf1abe61ad4c"
+    },
+    {
+      "constructorArgs": [
+        "0x2C8A6cb6D542291095ccf31D7fc13499A0FF7560"
+      ],
+      "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "deploymentType": "create",
+      "factoryDeps": [],
+      "address": "0x4c90F4E187809686642A63EEB439d8Fae7949929",
+      "txHash": "0x1ec6a03df740f32e6f7234e2641ffa08ee7bf36f650576d714460ffe3ff878f6"
+    },
+    {
+      "constructorArgs": [
+        "0x6f2bEf1515f4542D42aa89253b5336d1b3424862"
+      ],
+      "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "deploymentType": "create",
+      "factoryDeps": [],
+      "address": "0x844f4e68fB88a1D8DBdA1D5F020e66E3805CD72d",
+      "txHash": "0x5585991d55a90c431d2f3ceb14b7216ddf1d96850793ca7847fa83825606754c"
+    },
+    {
+      "constructorArgs": [
+        "0x60D5aECa6f96186ccBa651165B67aFDEa314f393"
+      ],
+      "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "deploymentType": "create",
+      "factoryDeps": [],
+      "address": "0x3870F34087D6E92d766dF939504492E6fDfafE19",
+      "txHash": "0xaaf3e5dfe6cffcd9369f238561a0ddb56a6f7ed5df4b46f23cabfff53f0d5b5b"
+    },
+    {
+      "constructorArgs": [
+        "0x4b358771b197f06558bDCd51d8864b564F847cCF"
+      ],
+      "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "deploymentType": "create",
+      "factoryDeps": [],
+      "address": "0x7b0E1739ee08AbFeE7e04d977c8E5d02944C6bb1",
+      "txHash": "0xc6331d04562a678151b1a82fbaf6da9a4217b702313d4158e59d55c3c74a1737"
+    },
+    {
+      "constructorArgs": [
+        "0x3cA22Bd7d7699340fC12e4B56F6d1b182038bfE6"
+      ],
+      "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "deploymentType": "create",
+      "factoryDeps": [],
+      "address": "0xC3c2C354C434303F617fAF4F070aBCD49e9265f8",
+      "txHash": "0x100831155e4dcac571af1c76dcc8f571613fd5664c25247286af38810cc5a098"
     }
   ]
 }
