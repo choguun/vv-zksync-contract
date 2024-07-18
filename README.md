@@ -1,33 +1,31 @@
 # vv-zksync-contract
 
 ### Vision
-* On-chain AIGC Survival Sandbox voxel-theme games in which users truly own their assets.
+* On-chain Autonomous Sandbox games. Players can explore, craft, combat, and compete to win prizes.
 
 ### Description
-* We are building a decentralized and On-chain AIGC Survival Sandbox voxel-theme games in which users truly own their assets by leveraging blockchain, IPFS and AI technology.
+* We are building On-chain Autonomous Sandbox games. Players can explore, craft, combat, and compete to win prizes.
 
 ### Problem
--Users do not truly own in-game assets. \
--Centralized and Control by Game Company \
--Limit of game content \
--The game is short-lived and does not sustain game economic
+-Lack of True Ownership: Players do not genuinely own in-game assets. \
+-Centralized Control: Game companies have complete control, limiting player autonomy. \
+-Content Limitations: Restricted game content reduces long-term engagement. \
+-Unsustainable Game Economics: Games often fail to maintain a sustainable economy, leading to short-lived experiences.
 
-### Team Backgroud
--We has experienced in Web3 > 4 years, previous successful NFT launch project that sold for more than 1.5 million USD
 
 ### Technologies Used:
-1. Smart Contract
-1.1 On-chain in-game Items and Token
-1.2 World (Game Logic)
-2. IPFS Storage to store game metadata
-3. WebGL
-4. Web Socket
-5. AI & LLM
+1. Smart Contract(Autonomous World) \
+     1.1 On-chain in-game Items, Token, and NFTs \
+     1.2 Game Logic
+2. WebGL to render game on browser
+3. Game Engine(Real-time Open World, Indexer) utilizes an entire data stored on-chain. 
+4. AI-generated content & LLM
 
 ### Key Features:
-1. On-chain Game Logic eg. Quest(Daily Check-in, Raffle, Mini game), Craft, Item, Token, Profile, and World.
+1. On-chain Game Logic eg. Quest(Daily Check-in, Raffle, Mini game), Craft, Item, Token, Profile, Vault, and World.
 2. Multiplayer
 3. Supported Multi-Platform on browser
+4. Paymaster
 
 ### How it works:
 ![How it works](/howitwork.png "How it works")
@@ -41,9 +39,10 @@ https://zksync.voxelverses.xyz
 * npm run setup
 
 ### Deployed Smart Contract
-1.Profile - NFT Profile to identify unique user https://sepolia.explorer.zksync.io/address/0x0C625C5AB6ec60802511DF11c90A47c5d35810D5 \
-2.Token - ERC20 In-game token https://sepolia.explorer.zksync.io/address/0x753d29A2371a992736aAD46D647AAa1459630d16 \
-3.Item - ERC1155 game item https://sepolia.explorer.zksync.io/address/0xD3B67827f56cFae8c1B17fF23f2A886AbC1EE547 \
-4.World - On-chain game logic https://sepolia.explorer.zksync.io/address/0xD6B783FD0D14ba220Bfb493b4f697De85Fec5001 \
-5.Raffle - Raffle Module for mini game https://sepolia.explorer.zksync.io/address/0xD6B783FD0D14ba220Bfb493b4f697De85Fec5001 \
-8.CraftSystem - Craft system module https://sepolia.explorer.zksync.io/address/0xd3aE73F38575B308394f1bB83DdEDe4c8aFFF7c3
+1. Profile - NFT Profile to identify unique user https://sepolia.explorer.zksync.io/address/0x3c6843A3c8cAa69e843d82617de46A4883a0B4F7
+2. Token - ERC20 In-game token https://sepolia.explorer.zksync.io/address/0x3cA22Bd7d7699340fC12e4B56F6d1b182038bfE6
+3. Item - ERC1155 game item https://sepolia.explorer.zksync.io/address/0xecfA6096A6c35d19933Ea9D0126C81568e4B7f95
+4. World - On-chain game logic https://sepolia.explorer.zksync.io/address/0xE2F279dF93d6C9e991115c281F7733f0d67e3406
+5. Raffle - Raffle Module for mini game https://sepolia.explorer.zksync.io/address/0xE2F279dF93d6C9e991115c281F7733f0d67e3406
+8. CraftSystem - Craft system module https://sepolia.explorer.zksync.io/address/0x6135BEAb54A539b73C552fcaBd97bb44dc5c56c0
+9. Paymaster - Paymaster module https://sepolia.explorer.zksync.io/address/0x47e31CbF55CfcdEE01abeF3153EBDCfBB4a8658B
