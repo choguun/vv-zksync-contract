@@ -208,7 +208,7 @@ contract World is Raffle, Ownable, ReentrancyGuard {
     }
 
     function _dailyCheckIn(uint256 _tokenId, uint256 _reward) internal {
-        Player storage userCheckInInfo = players[msg.sender];
+        Player storage userCheckInInfo = players[_msgSender()];
         require(block.timestamp >= userCheckInInfo.lastCheckIn + CHECK_IN_WINDOW, "Too early for next check-in");
 
         if (block.timestamp > userCheckInInfo.lastCheckIn + (CHECK_IN_WINDOW * 2)) {
@@ -222,7 +222,7 @@ contract World is Raffle, Ownable, ReentrancyGuard {
         _distributeRewardandScore(_tokenId, _reward);
 
         userCheckInInfo.lastCheckIn = block.timestamp;
-        emit CheckedIn(msg.sender, block.timestamp, userCheckInInfo.streak);
+        emit CheckedIn(_msgSender(), block.timestamp, userCheckInInfo.streak);
     }
 
     function _dailyPlayMinigame(uint256 _tokenId, uint256 _reward, uint256 _guess) internal {
@@ -234,7 +234,7 @@ contract World is Raffle, Ownable, ReentrancyGuard {
        // TODO: doeposit CUBE will be prize pool
         if(r == _guess) {
             _distributeRewardandScore(_tokenId, _reward);
-            emit RaffleResulted(msg.sender, block.timestamp, true);
+            emit RaffleResulted(_msgSender(), block.timestamp, true);
         }
     }
 
@@ -247,7 +247,7 @@ contract World is Raffle, Ownable, ReentrancyGuard {
     }
 
     function checkCurrentQuestStatus() public view returns (bool isCheckIn, bool isPlayMinigame, bool lastDoCraft){
-        Player storage userCheckInInfo = players[msg.sender];
+        Player storage userCheckInInfo = players[_msgSender()];
         isCheckIn = false;
         isPlayMinigame = false;
         lastDoCraft = false;
@@ -273,12 +273,6 @@ contract World is Raffle, Ownable, ReentrancyGuard {
         return questArray;
     }
     // Quest functions
-
-    // Helper functions
-    // function _getTokenBoundAccount(uint256 _tokenId) internal view returns (address) {
-    //     return ERC6551Registry(registry).account(account, chainId, profile, _tokenId, 1);
-    // }
-    // Helper functions
 
     // Admin functions
     // config world
