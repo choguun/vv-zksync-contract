@@ -39,10 +39,11 @@ https://zksync.voxelverses.xyz
 * npm run setup
 
 ### Deployed Smart Contract
-1. Profile - NFT Profile to identify unique user https://sepolia.explorer.zksync.io/address/0x3c6843A3c8cAa69e843d82617de46A4883a0B4F7
-2. Token - ERC20 In-game token https://sepolia.explorer.zksync.io/address/0x3cA22Bd7d7699340fC12e4B56F6d1b182038bfE6
-3. Item - ERC1155 game item https://sepolia.explorer.zksync.io/address/0xecfA6096A6c35d19933Ea9D0126C81568e4B7f95
-4. World - On-chain game logic https://sepolia.explorer.zksync.io/address/0xE2F279dF93d6C9e991115c281F7733f0d67e3406
+1. Profile - NFT Profile to identify unique user https://sepolia.explorer.zksync.io/address/0x2818dC29342fb87d739bbA949e75dA263744d6B1
+2. Token - ERC20 In-game token https://sepolia.explorer.zksync.io/address/0x1F36610FA671C68136398F28f4cdC7d88457053a
+3. Item - ERC1155 game item https://sepolia.explorer.zksync.io/address/0xa5bfF0eBEC4c30642E0fc0EB0f36236f87D44503
+4. World - On-chain game logic https://sepolia.explorer.zksync.io/address/0x1D5504bb54984dA10DaBef1dC90939d44417D2c6
 5. Raffle - Raffle Module for mini game https://sepolia.explorer.zksync.io/address/0xE2F279dF93d6C9e991115c281F7733f0d67e3406
-8. CraftSystem - Craft system module https://sepolia.explorer.zksync.io/address/0x6135BEAb54A539b73C552fcaBd97bb44dc5c56c0
+8. CraftSystem - Craft system module https://sepolia.explorer.zksync.io/address/0x901935d1062097De9261157B26dF99f879B617Cd
+9. Vault - Vault module https://sepolia.explorer.zksync.io/address/0x171141Ca9EeD2A5c0856bb24A2fa831c2e4277CA
 9. Paymaster - Paymaster module https://sepolia.explorer.zksync.io/address/0x47e31CbF55CfcdEE01abeF3153EBDCfBB4a8658B
