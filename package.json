@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "deploy": "hardhat deploy-zksync --script deploy.ts",
+    "deployAA": "hardhat deploy-zksync --script deployAA.ts",
     "setup": "hardhat deploy-zksync --script setup.ts",
     "compile": "hardhat compile",
     "clean": "hardhat clean",
