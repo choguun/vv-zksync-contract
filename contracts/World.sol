@@ -57,7 +57,7 @@ contract World is Raffle, Ownable, ReentrancyGuard {
     // External Contract
 
     // Game data
-    mapping(address => Player) private players;
+    mapping(address => Player) public players;
     mapping(uint256 => Quest) public quests;
     mapping(uint256 => GameItem) public gameItems;
 
@@ -141,8 +141,8 @@ contract World is Raffle, Ownable, ReentrancyGuard {
         emit PlayerCreated(_tokenId, _msgSender(), block.timestamp);
     }
 
-    function getPlayer() external view returns (Player memory) {
-        return players[_msgSender()];
+    function getPlayer(address _player) external view returns (Player memory) {
+        return players[_player];
     }
     // Player functions
 
@@ -195,8 +195,12 @@ contract World is Raffle, Ownable, ReentrancyGuard {
 
     function doDeposit(uint256 _tokenId, uint256 _amount) external onlyUser onlyTokenOwner(_tokenId) {
         require(_amount > 0, "Amount must be greater than 0");
-        Token(token).approve(vault, _amount);
+        require(Token(token).transferFrom(_msgSender(), address(this), _amount), "Transfer failed");
+        // Approve the vault to spend the asset on behalf of the World contract
+        require(Token(token).approve(address(vault), _amount), "Approve failed");
+        // Token(token).approve(vault, _amount);
         uint256 share = IERC4626(vault).deposit(_amount, _msgSender());
+
         if(share > 0) {
             players[_msgSender()].ticket += 1;
         }
@@ -235,6 +239,8 @@ contract World is Raffle, Ownable, ReentrancyGuard {
         if(r == _guess) {
             _distributeRewardandScore(_tokenId, _reward);
             emit RaffleResulted(_msgSender(), block.timestamp, true);
+        } else {
+            emit RaffleResulted(_msgSender(), block.timestamp, false);
         }
     }
 

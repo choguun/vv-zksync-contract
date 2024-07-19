@@ -470,6 +470,50 @@
       "factoryDeps": [],
       "address": "0x6135BEAb54A539b73C552fcaBd97bb44dc5c56c0",
       "txHash": "0x0a88f42d5d7e9ed4d5c0191e1877e8aab80f6e8fcd984e9b201f931b4085e0df"
+    },
+    {
+      "constructorArgs": [
+        "0x1a46582A48a04c67D78e062E0631cDDE9fD2DF0a",
+        "0xE2232091aE65192bDD5A5a77368735C06C069246"
+      ],
+      "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "deploymentType": "create",
+      "factoryDeps": [],
+      "address": "0x5BDAC8B60C36D1ab95b05fED6BD6bfcAb686a3A0",
+      "txHash": "0x6d33f1842a185d474385bc7cb96d7bb868af316fb63eb384a8aea8be6e8d05e6"
+    },
+    {
+      "constructorArgs": [
+        "0x1a46582A48a04c67D78e062E0631cDDE9fD2DF0a",
+        "0xeB09c1032d3e73d9F7Dec98d19D2a15D437Ad3C0"
+      ],
+      "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "deploymentType": "create",
+      "factoryDeps": [],
+      "address": "0x4054643e2C84e478644631f15c4858484d4d1d8A",
+      "txHash": "0x5a4b2b1aaf38d89d7347493ef8b23e463b7154c7746b8869f0968d5dadf5835f"
+    },
+    {
+      "constructorArgs": [
+        "0x1a46582A48a04c67D78e062E0631cDDE9fD2DF0a",
+        "0x650B3E4C879C51b9b329f629E397f82BCeE7a549"
+      ],
+      "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "deploymentType": "create",
+      "factoryDeps": [],
+      "address": "0x1580F906B1767DfA06b1C266694fb658d654A696",
+      "txHash": "0x6444baba6fbf000d5f0d09c72a689e99218ff672508654ab026a0407b248bb03"
+    },
+    {
+      "constructorArgs": [
+        "0x1a46582A48a04c67D78e062E0631cDDE9fD2DF0a",
+        "0x1D5504bb54984dA10DaBef1dC90939d44417D2c6"
+      ],
+      "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "deploymentType": "create",
+      "factoryDeps": [],
+      "address": "0x901935d1062097De9261157B26dF99f879B617Cd",
+      "txHash": "0x5308dcab617c1d061e81ff585a77163369b2d26ad0d56f851cd31f995d695150"
     }
   ]
 }
