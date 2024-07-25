@@ -47,3 +47,4 @@ https://zksync.voxelverses.xyz
 8. CraftSystem - Craft system module https://sepolia.explorer.zksync.io/address/0x901935d1062097De9261157B26dF99f879B617Cd
 9. Vault - Vault module https://sepolia.explorer.zksync.io/address/0x171141Ca9EeD2A5c0856bb24A2fa831c2e4277CA
 9. Paymaster - Paymaster module https://sepolia.explorer.zksync.io/address/0x47e31CbF55CfcdEE01abeF3153EBDCfBB4a8658B
+10. AAFactory - AAFactory module https://sepolia.explorer.zksync.io/address/0x962340118b235843032842D857d6Ac086F77EE64
