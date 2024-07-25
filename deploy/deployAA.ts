@@ -1,52 +1,140 @@
-import { utils, Wallet, Provider } from "zksync-ethers";
-import * as ethers from "ethers";
+import { Deployer } from "@matterlabs/hardhat-zksync";
+import { getProvider, getWallet, verifyContract } from "./utils";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
-import { Deployer } from "@matterlabs/hardhat-zksync-deploy";
-import { getWallet } from "./utils";
-// load env file
-import dotenv from "dotenv";
-dotenv.config();
+import { EIP712Signer, types, utils } from "zksync-ethers";
+import {
+  AbiCoder,
+  Contract,
+  Signature,
+  ZeroHash,
+  concat,
+  parseEther,
+} from "ethers";
 
-const DEPLOYER_PRIVATE_KEY = process.env.WALLET_PRIVATE_KEY || "";
-
+// This script is used to deploy a LibroAccountFactory contract and create an account using it.
+// as well as verify it on Block Explorer if possible for the network
 export default async function (hre: HardhatRuntimeEnvironment) {
-  // @ts-ignore target zkSyncSepoliaTestnet in config file which can be testnet or local
-  const provider = new Provider(hre.config.networks.zkSyncSepoliaTestnet.url);
-  const wallet = new Wallet(DEPLOYER_PRIVATE_KEY, provider);
+  const provider = getProvider();
+  const wallet = getWallet();
   const deployer = new Deployer(hre, wallet);
+
   const factoryArtifact = await deployer.loadArtifact("AAFactory");
-  const aaArtifact = await deployer.loadArtifact("Account");
+  const accountArtifact = await deployer.loadArtifact("Account");
+
+  const aaBytecodeHash = utils.hashBytecode(accountArtifact.bytecode);
 
   const factory = await deployer.deploy(
     factoryArtifact,
-    [utils.hashBytecode(aaArtifact.bytecode)],
+    [aaBytecodeHash],
     undefined,
-    [aaArtifact.bytecode],
+    undefined,
+    [accountArtifact.bytecode] // Should specify additional factory dependencies
   );
+
   const factoryAddress = await factory.getAddress();
-  console.log(`AA factory address: ${factoryAddress}`);
 
-  const aaFactory = new ethers.Contract(
-    factoryAddress,
-    factoryArtifact.abi,
-    wallet,
-  );
+  console.log(`Factory address: ${factoryAddress}`);
 
-  const owner = Wallet.createRandom();
-  console.log("SC Account owner pk: ", owner.privateKey);
+  const abiCoder = new AbiCoder();
 
-  const salt = ethers.ZeroHash;
-  const tx = await aaFactory.deployAccount(salt, owner.address);
+  console.log("Verifying factory on Block Explorer");
+
+  await verifyContract({
+    address: factoryAddress,
+    contract: "contracts/AAFactory.sol:AAFactory",
+    constructorArguments: abiCoder.encode(["bytes32"], [aaBytecodeHash]),
+    bytecode: factoryArtifact.bytecode,
+  });
+
+  console.log("Factory verified");
+
+  const salt = ZeroHash;
+  const owner = wallet.address;
+
+  const tx = await factory.deployAccount(salt, owner, { gasLimit: 5000000 });
   await tx.wait();
 
-  const abiCoder = new ethers.AbiCoder();
-  const accountAddress = utils.create2Address(
-    factoryAddress,
-    await aaFactory.aaBytecodeHash(),
-    salt,
-    abiCoder.encode(["address"], [owner.address]),
-  );
+  const accountAddress = await factory.getAccountAddress(salt, owner);
 
-  console.log(`SC Account deployed on address ${accountAddress}`);
-  console.log(`Done!`);
+  console.log(`Account address: ${accountAddress}`);
+
+  console.log("Verifying account on Block Explorer");
+
+  await verifyContract({
+    address: accountAddress,
+    contract: "contracts/Account.sol:Account",
+    constructorArguments: abiCoder.encode(["address"], [owner]),
+    bytecode: accountArtifact.bytecode,
+  });
+
+  console.log("Account verified");
+
+  // console.log("Funding account with 0.02 ETH");
+
+  // const fundTx = await wallet.sendTransaction({
+  //   to: accountAddress,
+  //   value: parseEther("0.02"),
+  // });
+  // await fundTx.wait();
+
+  // console.log("Account funded");
+
+  // const counterAddress = "0x42d625D2A7142F55952d8B63a5FCa907656c2887";
+  // const counterArtifact = await deployer.loadArtifact("Counter");
+
+  // const counter = new Contract(counterAddress, counterArtifact.abi, wallet);
+
+  // const countBefore = BigInt(await counter.count());
+
+  // console.log(`Counter count before: ${countBefore.toString()}`);
+
+  // console.log("Calling increment on account");
+
+  // let incrementTx = await counter.increment.populateTransaction();
+
+  // incrementTx = {
+  //   ...incrementTx,
+  //   from: accountAddress,
+  //   chainId: (await provider.getNetwork()).chainId,
+  //   nonce: await provider.getTransactionCount(accountAddress),
+  //   type: 113,
+  //   gasPrice: await provider.getGasPrice(),
+  //   value: BigInt(0),
+  //   customData: {
+  //     gasPerPubdata: utils.DEFAULT_GAS_PER_PUBDATA_LIMIT,
+  //   } as types.Eip712Meta,
+  // };
+
+  // incrementTx.gasLimit = await provider.estimateGas(incrementTx);
+
+  // const digest = EIP712Signer.getSignedDigest(incrementTx);
+
+  // const signature = concat([
+  //   Signature.from(wallet.signingKey.sign(digest)).serialized,
+  // ]);
+
+  // incrementTx.customData = {
+  //   ...incrementTx.customData,
+  //   customSignature: signature,
+  // };
+
+  // console.log("Sending increment transaction");
+
+  // const sentTx = await provider.broadcastTransaction(
+  //   types.Transaction.from(incrementTx).serialized
+  // );
+
+  // await sentTx.wait();
+
+  // const countAfter = BigInt(await counter.count());
+
+  // console.log(`Counter count after: ${countAfter}`);
+
+  // if (countAfter === countBefore + BigInt(1)) {
+  //   console.log("Counter incremented successfully");
+  // } else {
+  //   console.error("Counter increment failed");
+  // }
+
+  console.log("Done!");
 }
