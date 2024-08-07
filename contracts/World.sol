@@ -67,6 +67,10 @@ contract World is Raffle, Ownable, ReentrancyGuard {
 
     uint256 public constant CHECK_IN_WINDOW = 24 hours;
     uint256 public constant DENOMINATOR = 10 ** 18;
+
+    uint8 public constant NORMAL_DROP = 30; // 30% Chance
+    uint8 public constant RARE_DROP = 10; // 10% Chance
+    uint8 public constant EPIC_DROP = 5; // 5% Chance 
     // Game data
 
     // Events
@@ -134,6 +138,32 @@ contract World is Raffle, Ownable, ReentrancyGuard {
     constructor(address _initialOwner) {
         transferOwnership(_initialOwner);
     }
+
+    // Mine functions
+    function _isBlockValid(uint256 x, uint256 y, uint256 z) internal view returns (bool) {
+        return true;
+    }
+
+    function _calculateDrop(uint256 x, uint256 y, uint256 z) internal view returns (uint256) {
+        uint256 randomSeed = (uint256(keccak256(abi.encodePacked(block.timestamp, block.prevrandao, x, y, z))) % 100);
+        uint256 drop = 0;
+        if(randomSeed < EPIC_DROP) {
+            drop = 100;
+        } else if(randomSeed < RARE_DROP) {
+            drop = 50;
+        } else if(randomSeed < NORMAL_DROP) {
+            drop = 10;
+        }
+        return drop;
+    }
+
+    function mine(uint256 _tokenId, uint256 x, uint256 y, uint256 z) external onlyUser onlyTokenOwner(_tokenId) {
+        // address tokenBoundAccount = _getTokenBoundAccount(_tokenId);
+        require(_isBlockValid(x, y, z), "Invalid block");
+        uint256 drop = _calculateDrop(x, y, z);
+        _distributeRewardandScore(_tokenId, drop);
+    }
+    // Mine functions
 
     // Player functions
     function createPlayer(uint256 _tokenId) external onlyUser onlyTokenOwner(_tokenId) {
