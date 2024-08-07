@@ -26,12 +26,16 @@
 2. Multiplayer
 3. Supported Multi-Platform on browser
 4. Paymaster
+5. Native Account Abstraction
 
 ### How it works:
 ![How it works](/howitwork.png "How it works")
 
 ### Demo:
 https://zksync.voxelverses.xyz
+
+### Video:
+https://www.loom.com/share/b494492070074789a2ace3acf7cd30bb?sid=668f67fa-6a1c-423e-8b7e-2c4834e9e1ba
 
 
 ### How to deploy vv-zksync-contract
