@@ -14,19 +14,18 @@
 
 
 ### Technologies Used:
-1. Smart Contract(Autonomous World) \
-     1.1 On-chain in-game Items, Token, and NFTs \
-     1.2 Game Logic
-2. WebGL to render game on browser
-3. Game Engine(Real-time Open World, Indexer) utilizes an entire data stored on-chain. 
+1. Smart Contract(Autonomous World)
+     1.1 On-chain in-game Items, Tokens, NFTs, and Game Logic \n
+     1.2 World Contract with Hooks feature
+2. Game engine - helps to store the entire game state on-chain with smooth rendering on the client side.
+3. Built-in in-game DeFi
 4. AI-generated content & LLM
 
 ### Key Features:
-1. On-chain Game Logic eg. Quest(Daily Check-in, Raffle, Mini game), Craft, Item, Token, Profile, Vault, and World.
-2. Multiplayer
-3. Supported Multi-Platform on browser
-4. Paymaster
-5. Native Account Abstraction
+1. Fully on-chain game
+2. Extended World (Permissionless)
+3. Account Abstraction & Paymaster
+4. Real-time Open World
 
 ### How it works:
 ![How it works](/howitwork.png "How it works")
