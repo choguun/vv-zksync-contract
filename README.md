@@ -14,8 +14,8 @@
 
 
 ### Technologies Used:
-1. Smart Contract(Autonomous World)
-     1.1 On-chain in-game Items, Tokens, NFTs, and Game Logic \n
+1. Smart Contract(Autonomous World) \
+     1.1 On-chain in-game Items, Tokens, NFTs, and Game Logic \
      1.2 World Contract with Hooks feature
 2. Game engine - helps to store the entire game state on-chain with smooth rendering on the client side.
 3. Built-in in-game DeFi
