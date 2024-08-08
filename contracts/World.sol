@@ -24,13 +24,16 @@ contract World is Raffle, Ownable, ReentrancyGuard {
     }
 
     struct Player {
-        uint256 tokenId;
-        uint256 score;
+        uint32 tokenId;
+        uint16 score;
+        uint8 streak;
+        uint16 ticket;
+        uint8 stamina;
+        uint8 hp;
         uint256 lastCheckIn;
-        uint256 streak;
         uint256 lastRaffle;
         uint256 lastDoCraft;
-        uint256 ticket;
+        uint256 lastResetPlayer;
     }
     struct Quest {
         string name;
@@ -124,7 +127,7 @@ contract World is Raffle, Ownable, ReentrancyGuard {
         require(Profile(profile).balanceOf(_msgSender()) > 0, "Only user can call this function");
         _;
     }
-    modifier onlyTokenOwner(uint256 _tokenId) {
+    modifier onlyTokenOwner(uint32 _tokenId) {
         require(Profile(profile).ownerOf(_tokenId) == _msgSender(), "Only owner of the token can exchange item");
         _;
     }
@@ -138,9 +141,26 @@ contract World is Raffle, Ownable, ReentrancyGuard {
     constructor(address _initialOwner) {
         transferOwnership(_initialOwner);
     }
+    // constructor
+    
+    // Player functions
+    function _resetPlayer() internal {
+        players[_msgSender()].stamina = 100;
+        players[_msgSender()].hp = 10;
+        players[_msgSender()].lastResetPlayer = block.timestamp;
+    }
+    // Player functions
+
+    // Spawn functions
+    function spawn(uint32 _tokenId) external onlyUser onlyTokenOwner(_tokenId) {
+        require(block.timestamp >=players[_msgSender()].lastResetPlayer  + CHECK_IN_WINDOW, "Too early for next reset player");
+        _resetPlayer();
+    }
+    // Spawn functions
 
     // Mine functions
     function _isBlockValid(uint256 x, uint256 y, uint256 z) internal view returns (bool) {
+        // TODO: add more logic to validate the block
         return true;
     }
 
@@ -157,17 +177,18 @@ contract World is Raffle, Ownable, ReentrancyGuard {
         return drop;
     }
 
-    function mine(uint256 _tokenId, uint256 x, uint256 y, uint256 z) external onlyUser onlyTokenOwner(_tokenId) {
-        // address tokenBoundAccount = _getTokenBoundAccount(_tokenId);
+    function mine(uint32 _tokenId, uint256 x, uint256 y, uint256 z) external onlyUser onlyTokenOwner(_tokenId) {
         require(_isBlockValid(x, y, z), "Invalid block");
+        require(players[_msgSender()].stamina > 0, "Not enough stamina");
+        players[_msgSender()].stamina -= 1;
         uint256 drop = _calculateDrop(x, y, z);
         _distributeRewardandScore(_tokenId, drop);
     }
     // Mine functions
 
     // Player functions
-    function createPlayer(uint256 _tokenId) external onlyUser onlyTokenOwner(_tokenId) {
-        players[_msgSender()] = Player(_tokenId, 0, 0, 0, 0, 0, 0);
+    function createPlayer(uint32 _tokenId) external onlyUser onlyTokenOwner(_tokenId) {
+        players[_msgSender()] = Player(_tokenId, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         emit PlayerCreated(_tokenId, _msgSender(), block.timestamp);
     }
 
@@ -185,7 +206,7 @@ contract World is Raffle, Ownable, ReentrancyGuard {
     // Market functions
 
     // Exchange functions
-    function exchangeItem(uint256 _tokenId, uint256 _itemId, ExchangeType exchangeType) external onlyUser onlyTokenOwner(_tokenId) nonReentrant {
+    function exchangeItem(uint32 _tokenId, uint256 _itemId, ExchangeType exchangeType) external onlyUser onlyTokenOwner(_tokenId) nonReentrant {
         uint256 price = _getItemPrice(_itemId);
 
         if(exchangeType == ExchangeType.BUY) {
@@ -207,7 +228,7 @@ contract World is Raffle, Ownable, ReentrancyGuard {
     // Exchange functions
 
     // Quest functions
-    function doQuest(uint256 _tokenId, uint256 _questId, uint256 _data) external onlyUser onlyTokenOwner(_tokenId) {
+    function doQuest(uint32 _tokenId, uint256 _questId, uint256 _data) external onlyUser onlyTokenOwner(_tokenId) {
         if(quests[_questId].questType == QuestType.DAILY_CHECK_IN) {
             // Quest 1: Daily check-in
             _dailyCheckIn(_tokenId, quests[_questId].reward);
@@ -223,7 +244,7 @@ contract World is Raffle, Ownable, ReentrancyGuard {
         }
     }
 
-    function doDeposit(uint256 _tokenId, uint256 _amount) external onlyUser onlyTokenOwner(_tokenId) {
+    function doDeposit(uint32 _tokenId, uint256 _amount) external onlyUser onlyTokenOwner(_tokenId) {
         require(_amount > 0, "Amount must be greater than 0");
         require(Token(token).transferFrom(_msgSender(), address(this), _amount), "Transfer failed");
         // Approve the vault to spend the asset on behalf of the World contract
@@ -236,12 +257,12 @@ contract World is Raffle, Ownable, ReentrancyGuard {
         }
     }
 
-    function _distributeRewardandScore(uint256 _tokenId, uint256 _reward) internal {
+    function _distributeRewardandScore(uint32 _tokenId, uint256 _reward) internal {
         // address tokenBoundAccount = _getTokenBoundAccount(_tokenId);
         Token(token).mint(_msgSender(), _reward * DENOMINATOR);
     }
 
-    function _dailyCheckIn(uint256 _tokenId, uint256 _reward) internal {
+    function _dailyCheckIn(uint32 _tokenId, uint256 _reward) internal {
         Player storage userCheckInInfo = players[_msgSender()];
         require(block.timestamp >= userCheckInInfo.lastCheckIn + CHECK_IN_WINDOW, "Too early for next check-in");
 
@@ -259,7 +280,7 @@ contract World is Raffle, Ownable, ReentrancyGuard {
         emit CheckedIn(_msgSender(), block.timestamp, userCheckInInfo.streak);
     }
 
-    function _dailyPlayMinigame(uint256 _tokenId, uint256 _reward, uint256 _guess) internal {
+    function _dailyPlayMinigame(uint32 _tokenId, uint256 _reward, uint256 _guess) internal {
         require(players[_msgSender()].ticket > 0 , "No ticket is avaliabe");
         uint256 r = _enterRaffle();
         players[_msgSender()].ticket = players[_msgSender()].ticket - 1;
@@ -274,8 +295,7 @@ contract World is Raffle, Ownable, ReentrancyGuard {
         }
     }
 
-    function _doCraft(uint256 _tokenId, uint256 _reward, uint256 _recipeId) internal {
-        // address tokenBoundAccount = _getTokenBoundAccount(_tokenId);
+    function _doCraft(uint32 _tokenId, uint256 _reward, uint256 _recipeId) internal {
         (bool success, ) = CraftSystem(craft).craftItem(_recipeId, _msgSender());
         if(success) {
             _distributeRewardandScore(_tokenId, _reward);
@@ -354,7 +374,7 @@ contract World is Raffle, Ownable, ReentrancyGuard {
 
     // Player functions
     function deletePlayer(address _player) public onlyOwner {
-        uint256 _tokenId = players[_player].tokenId;
+        uint32 _tokenId = players[_player].tokenId;
         delete players[_player];
         emit PlayerDeleted(_tokenId, _player, block.timestamp);
     }
