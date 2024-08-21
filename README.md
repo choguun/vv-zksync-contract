@@ -40,6 +40,7 @@ https://www.loom.com/share/b494492070074789a2ace3acf7cd30bb?sid=668f67fa-6a1c-42
 ### How to deploy vv-zksync-contract
 * npm run deploy
 * npm run setup
+* npm run deployAA
 
 ### Deployed Smart Contract
 1. Profile - NFT Profile to identify unique user https://sepolia.explorer.zksync.io/address/0x2818dC29342fb87d739bbA949e75dA263744d6B1

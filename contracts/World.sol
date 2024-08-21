@@ -6,6 +6,7 @@ import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.
 import {Profile} from "./Profile.sol";
 import {Token} from "./Token.sol";
 import {Item} from "./Item.sol";
+import {Potion} from "./Potion.sol";
 import {Raffle} from "./Raffle.sol";
 import {CraftSystem} from "./CraftSystem.sol";
 import {IERC4626} from "./IERC4626.sol";
@@ -53,6 +54,7 @@ contract World is Raffle, Ownable, ReentrancyGuard {
     address public token; // Token
     address public item; // Item
     address public craft; // Craft System
+    address public potion; // Potion
     address public registry; // Registry
     address public account; // Token Bound Account
     address public vault; // Vault
@@ -165,6 +167,7 @@ contract World is Raffle, Ownable, ReentrancyGuard {
     }
 
     function _calculateDrop(uint256 x, uint256 y, uint256 z) internal view returns (uint256) {
+        require(_isBlockValid(x, y, z), "Invalid block");
         uint256 randomSeed = (uint256(keccak256(abi.encodePacked(block.timestamp, block.prevrandao, x, y, z))) % 100);
         uint256 drop = 0;
         if(randomSeed < EPIC_DROP) {
@@ -177,15 +180,6 @@ contract World is Raffle, Ownable, ReentrancyGuard {
         return drop;
     }
 
-    function mine(uint32 _tokenId, uint256 x, uint256 y, uint256 z) external onlyUser onlyTokenOwner(_tokenId) {
-        require(_isBlockValid(x, y, z), "Invalid block");
-        require(players[_msgSender()].stamina > 0, "Not enough stamina");
-        players[_msgSender()].stamina -= 1;
-        uint256 drop = _calculateDrop(x, y, z);
-        _distributeRewardandScore(_tokenId, drop);
-    }
-    // Mine functions
-
     // Player functions
     function createPlayer(uint32 _tokenId) external onlyUser onlyTokenOwner(_tokenId) {
         players[_msgSender()] = Player(_tokenId, 0, 0, 0, 0, 0, 0, 0, 0, 0);
@@ -196,6 +190,28 @@ contract World is Raffle, Ownable, ReentrancyGuard {
         return players[_player];
     }
     // Player functions
+
+    function mine(uint32 _tokenId, uint256 x, uint256 y, uint256 z) external onlyUser onlyTokenOwner(_tokenId) {
+        require(_isBlockValid(x, y, z), "Invalid block");
+        require(players[_msgSender()].stamina > 0, "Not enough stamina");
+        players[_msgSender()].stamina -= 1;
+        uint256 drop = _calculateDrop(x, y, z);
+        _distributeRewardandScore(_tokenId, drop);
+    }
+    // Mine functions
+
+    // consumePotion functions
+    function consumePotion(uint32 _tokenId, uint256 _potionId) external onlyUser onlyTokenOwner(_tokenId) {
+        // address tokenBoundAccount = _getTokenBoundAccount(_tokenId);
+        require(Potion(potion).balanceOf(_msgSender(), _potionId) > 0, "Potion Token is not enough to consume potion");
+        Potion(potion).burn(_msgSender(), _potionId, 1);
+        if(_potionId == 0) {
+            players[_msgSender()].stamina += 10;
+        } else {
+            players[_msgSender()].hp += 1;
+        }
+    }
+    // consumePotion functions
 
     // Market functions
     function setMarketFees(uint256 fees) external onlyOwner {
@@ -342,6 +358,10 @@ contract World is Raffle, Ownable, ReentrancyGuard {
 
     function setItem(address _item) public onlyOwner {
         item = _item;
+    }
+
+    function setPotion(address _potion) public onlyOwner {
+        potion = _potion;
     }
 
     function setCraft(address _craft) public onlyOwner {
