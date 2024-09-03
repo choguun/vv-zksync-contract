@@ -191,6 +191,7 @@ contract World is Raffle, Ownable, ReentrancyGuard {
     }
     // Player functions
 
+    // Mine functions
     function mine(uint32 _tokenId, uint256 x, uint256 y, uint256 z) external onlyUser onlyTokenOwner(_tokenId) {
         require(_isBlockValid(x, y, z), "Invalid block");
         require(players[_msgSender()].stamina > 0, "Not enough stamina");
@@ -199,6 +200,14 @@ contract World is Raffle, Ownable, ReentrancyGuard {
         _distributeRewardandScore(_tokenId, drop);
     }
     // Mine functions
+
+    // Build functions
+    function build(uint32 _tokenId, uint256 x, uint256 y, uint256 z) external onlyUser onlyTokenOwner(_tokenId) {
+        require(_isBlockValid(x, y, z), "Invalid block");
+        require(players[_msgSender()].stamina > 0, "Not enough stamina");
+        players[_msgSender()].stamina -= 1;
+    }
+    // Build functions
 
     // consumePotion functions
     function consumePotion(uint32 _tokenId, uint256 _potionId) external onlyUser onlyTokenOwner(_tokenId) {
