@@ -24,6 +24,13 @@ contract World is Raffle, Ownable, ReentrancyGuard {
         SELL
     }
 
+    enum BlockType {
+        STONE,
+        IRON,
+        GOLD,
+        DIAMOND
+    }
+
     struct Player {
         uint32 tokenId;
         uint16 score;
@@ -35,6 +42,10 @@ contract World is Raffle, Ownable, ReentrancyGuard {
         uint256 lastRaffle;
         uint256 lastDoCraft;
         uint256 lastResetPlayer;
+    }
+    struct PlayerInventory {
+        BlockType[] blocks;
+        uint256[] blockQuantities;
     }
     struct Quest {
         string name;
