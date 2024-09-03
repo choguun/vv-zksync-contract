@@ -9,12 +9,12 @@ import { ethers } from "ethers";
 // An example of a script to interact with the contract
 export default async function () {
   // console.log(`Running script to interact with contract ${CONTRACT_ADDRESS}`);
-  const world = "0xE2F279dF93d6C9e991115c281F7733f0d67e3406";
-  const item = "0xecfA6096A6c35d19933Ea9D0126C81568e4B7f95";
-  const token = "0x3cA22Bd7d7699340fC12e4B56F6d1b182038bfE6";
-  const profile = "0x3c6843A3c8cAa69e843d82617de46A4883a0B4F7";
-  const craft = "0x6135BEAb54A539b73C552fcaBd97bb44dc5c56c0";
-  const vault = "0xC3c2C354C434303F617fAF4F070aBCD49e9265f8";
+  const world = "0x9d629C9aCb519CD8b1eaa06C9654D3a12F6B0e3c";
+  const item = "0x9ab50Bb2A46948dC500ad94eEbC907c8082b5E86";
+  const token = "0xB7fF27A62b27fBf3f347fa0289d2c4E595B078D7";
+  const profile = "0xb49b523cFfa02d98ddd7f115ef96D75116cad260";
+  const craft = "0x140aC38baa69734D51215A064Fa9223C8F8C78f4";
+  const vault = "0x581639b57B0843c1F9B988811259FDb9e1E70281";
 
   // Load compiled contract info
   const WorldcontractArtifact = await hre.artifacts.readArtifact("World");
@@ -65,7 +65,7 @@ export default async function () {
   console.log(`Tx5: ${tx5.hash}`);
   await tx5.wait();
 
-  const tx6 = await Worldcontract.createQuest("dailyCheckIn", "Daily Check In", 200, 0);
+  const tx6 = await Worldcontract.createQuest("dailyCheckIn", "Daily Check In", 250, 0);
   console.log(`Tx6: ${tx6.hash}`);
   await tx6.wait();
 

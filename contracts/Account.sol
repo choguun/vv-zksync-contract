@@ -26,6 +26,7 @@ import {IERC1155Receiver} from "@openzeppelin/contracts/token/ERC1155/IERC1155Re
 import {IERC165} from "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {Multicall} from "./Multicall.sol";
+import {SignatureChecker} from "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol";
 
 contract Account is IAccount, IERC1271, IERC721Receiver, IERC1155Receiver, Ownable, Multicall {
     error Account__OnlyBootloader();
@@ -88,7 +89,8 @@ contract Account is IAccount, IERC1271, IERC721Receiver, IERC1155Receiver, Ownab
 
     function isValidSignature(bytes32 _hash, bytes memory _signature) public view override returns (bytes4 magic) {
         if (_isValidSignature(_hash, _signature)) {
-            magic = EIP1271_SUCCESS_RETURN_VALUE;
+            address _address = msg.sender;
+            magic = IERC1271(_address).isValidSignature(_hash, _signature);
         }
     }
 

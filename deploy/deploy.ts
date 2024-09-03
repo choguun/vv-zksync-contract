@@ -13,7 +13,7 @@ export default async function () {
 
   const owner = await ownerX.address;
 
-  const paymaster = await deployContract("GaslessPaymaster", []);
+  // const paymaster = await deployContract("GaslessPaymaster", []);
 
   const world = await deployContract("World", [owner]);
   const profile = await deployContract("Profile", [owner]);
@@ -24,15 +24,17 @@ export default async function () {
   const craft = await deployContract("CraftSystem", [owner, await world.getAddress()]);
   const item = await deployContract("Item", [owner, await world.getAddress(), await craft.getAddress(), ""]);
   const vault = await deployContract("ERC4626Vault", [await token.getAddress()]);
+  // const aaArtifact = await deployer.loadArtifact("Account");
+  // const factory = await deployContract("AAFactory", []);
 
-  await (
-    await ownerX.sendTransaction({
-      to: paymaster.target,
-      value: ethers.parseEther("0.001"),
-    })
-  ).wait();
+  // await (
+  //   await ownerX.sendTransaction({
+  //     to: paymaster.target,
+  //     value: ethers.parseEther("0.001"),
+  //   })
+  // ).wait();
 
-  console.log('Paymaster deployed and funded');
+  // console.log('Paymaster deployed and funded');
   
   console.log(
     `item address: ${await item.getAddress()}`
@@ -52,9 +54,9 @@ export default async function () {
   console.log(
     `vault address: ${await vault.getAddress()}`
   )
-  console.log(
-    `paymaster address: ${await paymaster.getAddress()}`
-  )
+  // console.log(
+  //   `paymaster address: ${await paymaster.getAddress()}`
+  // )
     // Supplying paymaster with ETH
 
   
